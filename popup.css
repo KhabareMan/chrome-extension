@@ -1,0 +1,35 @@
+body {
+    direction: rtl;
+}
+
+body#options-page {
+    text-align: center;
+}
+
+body#popup-page {
+    width: 600px;
+}
+
+body {
+    text-align: center;
+}
+
+#results {
+    text-align: right;
+}
+
+#popup-page #results .news-item {
+    display: block;
+}
+
+#list-control {
+    direction: ltr;
+}
+
+i.loading.hide {
+    display: none;
+}
+
+i.loading {
+    margin-top: 20px;
+}
