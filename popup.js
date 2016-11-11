@@ -12,12 +12,6 @@ var valid;
 var user_welcome = 1;
 var notifing;
 
-$(document).ready(function () {
-    $('body').on('click', 'li a,.link', function () {
-        chrome.tabs.create({url: $(this).attr('href')});
-        return false;
-    });
-});
 
 function news_template(item) {
     var date = new Date(item['published_date']);
@@ -26,18 +20,21 @@ function news_template(item) {
 
     var ret = '<div class="item"><i class="triangle left red rss icon"></i>';
     ret += '<div class="content">';
-    ret += '<a class="header">';
+    ret += '<h4 class="header">';
     ret += item['title'];
-    ret += '</a>';
+    ret += '</h4>';
 
 
     ret += '<div class="description">';
+    ret += '<div class="news-details">';
     ret += '<span class="news-time t' + item['id'] + '">' + diffMins + '</span>';
-    ret += "دقیقه‌ی پیش توسط " + item['agency'];
+    ret += "دقیقه‌ی پیش توسط " + item['agency'] + '</div>';
     ret += item['summary'];
+    ret += '<span class="news-link"> <a class="link" href="' + item['link'] + '">' + 'برو به خبر' + '</a></span>'
     ret += '</div></div></div>';
     return ret
 }
+
 
 
 function check_login() {
@@ -47,6 +44,7 @@ function check_login() {
         all_data: [],
         hist_mark: [],
         validation: 1,
+        user_status: [],
     }, function (items) {
         username = items.username;
         password = items.password;
@@ -55,9 +53,8 @@ function check_login() {
         marks = items.hist_mark;
         if (username.length > 0 && valid) {
             if (user_welcome) {
-                document.getElementById('check-login').style.display = 'none';
-                document.getElementById('change-user').innerHTML = '<div class="ui success message"><i class="close icon"></i><div class="header"> کاربر ' +
-                    username + ' وارد شده است.' + '</div></div>';
+                // document.getElementById('change-user').innerHTML = '<div class="ui success message"><i class="close icon"></i><div class="header"> کاربر ' +
+                //     username + ' وارد شده است.' + '</div></div>';
                 $('.message .close').on('click', function () {
                     $(this)
                         .closest('.message')
@@ -80,6 +77,7 @@ function check_login() {
                     }
                 }
                 var prior = document.getElementById('results').innerHTML;
+
                 document.getElementById('results').innerHTML = results + prior;
                 $('.ui.accordion').accordion();
                 chrome.storage.local.set({
@@ -90,6 +88,8 @@ function check_login() {
             }
 
         }
+
+        document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
     });
 }
 
@@ -98,9 +98,17 @@ function periodic_check_login() {
         hist_mark: []
     }, function () {
     });
-    check_login()
+    check_login();
     self.setInterval(function () {
         check_login()
+    }, 10000);
+
+    self.setInterval(function () {
+        chrome.storage.local.get({
+            user_status: []
+        }, function (items) {
+            document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
+        });
     }, 5000);
 }
 
@@ -114,14 +122,14 @@ document.addEventListener('DOMContentLoaded', function () {
         user_welcome: 1,
         notifing: 1
     }, function (items) {
-        user_welcome = items.user_welcome
-        notifing = items.notifing
-        iplaying = items.playing
+        user_welcome = items.user_welcome;
+        notifing = items.notifing;
+        iplaying = items.playing;
         if (iplaying == 1) {
             $('#button-play i').addClass('pause')
         }
         else {
-            $('#button-play i').addClass('play')
+            $('#button-play i').addClass('play');
             $('i.loading').addClass('hide')
         }
 
@@ -136,6 +144,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var setting = document.getElementById('button-setting');
     setting.addEventListener('click', function () {
         window.location.href = 'options.html';
+    });
+
+    // Settings button
+    var setting = document.getElementById('button-help');
+    setting.addEventListener('click', function () {
+        window.location.href = 'help.html';
     });
 
 
@@ -157,8 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Play/Pause button
     var pl = document.getElementById('button-play');
     pl.addEventListener('click', function () {
-        $('#button-play i').toggleClass('play')
-        $('#button-play i').toggleClass('pause')
+        $('#button-play i').toggleClass('play');
+        $('#button-play i').toggleClass('pause');
         if (iplaying == 1) {
             iplaying = 0;
             $('i.loading').addClass('hide')
@@ -177,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Play/Pause button
     var not = document.getElementById('button-notif');
     not.addEventListener('click', function () {
-        $('#button-notif i').toggleClass('mute')
+        $('#button-notif i').toggleClass('mute');
 
         if (notifing == 1) {
             notifing = 0;

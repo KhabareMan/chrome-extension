@@ -6,10 +6,33 @@
     <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
     <script src="semantic/semantic.min.js"></script>
     <link href="semantic/icon.min.css" rel="stylesheet">
+    <script src="general.js"></script>
+    <script src="options.js"></script>
     <link href="popup.css" rel="stylesheet">
 </head>
 <body id="options-page">
-<h1>خبرزنده‌ی من</h1>
+<h3 class="ui block header">خبر زنده‌ی من
+</h3>
+<div class="header-block">
+
+    <div class="list-control ui labeled icon buttons">
+        <button class="ui button" id="button-return">
+            <i class="icon arrow left"></i>
+            برگشت
+        </button>
+        <button id="submit" class="ui button">ذخیره
+            <i class="icon thumbs outline up"></i>
+        </button>
+    </div>
+
+
+    <div class="ui warning message">
+        <ul class="list" id="user-status">
+
+        </ul>
+    </div>
+</div>
+
 <div id="login-block">
 
     <div class="ui form">
@@ -19,11 +42,10 @@
         </div>
         <div class="inline field">
             <label>عبارت توکن</label>
-            <input type="text" name="password" id="password-form" placeholder="توکن">
+            <input type="text" name="token" id="token-form" placeholder="توکن">
         </div>
 
 
-        <button id="submit" class="ui button">ذخیره</button>
     </div>
 
     <div id="status">
@@ -32,8 +54,7 @@
 </div>
 <div id="return-popup">
 
-    <a href="popup.html">صفحه اخبار زنده</a>
 </div>
-<script src="options.js"></script>
+
 </body>
 </html>

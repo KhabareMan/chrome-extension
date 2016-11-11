@@ -1,35 +1,34 @@
 {
   "manifest_version": 2,
-  "name": "Khabare Man",
-  "description": "Khabare Man Notification!",
-  "version": "0.00009",
+  "name": "Khabare Man Notification",
+  "short_name": "KhabareMan",
+  "description": "Khabare Man Notification! (Beta)",
+  "version": "0.0.0.2",
   "options_page": "options.html",
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
     "default_popup": "popup.html",
-    "default_title": "Click here!"
+    "default_title": "خبرِمن!"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "background": {
     "persistent": true,
     "scripts": [
       "jquery-3.1.1.min.js",
+      "general.js",
       "bg.js"
     ]
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*/*"
-      ],
-      "js": [
-        "jquery-3.1.1.min.js",
-        "noty/js/noty/packaged/jquery.noty.packaged.min.js",
-        "alert.js"
-      ]
-    }
-  ],
   "permissions": [
-    "*://*/*",
-    "storage"
+    "*://khabareman.com/*",
+    "storage",
+    "notifications"
   ]
 }

@@ -1,13 +1,59 @@
+@font-face {
+    font-family: 'Yekan';
+    src: url('fonts/Yekan.eot?#') format('eot'),
+    url('fonts/Yekan.woff') format('woff'),
+    url('fonts/Yekan.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Nazanin';
+    src: url('fonts/Nazanin.eot?#') format('eot'),
+    url('fonts/Nazanin.woff') format('woff'),
+    url('fonts/Nazanin.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
 body {
     direction: rtl;
+
+}
+
+body#options-page h3.header, body#popup-page h3.header, #results h4, body .header-block {
+    font-family: Yekan, tahoma;
+}
+
+body {
+
+}
+
+body #results {
+    font-family: Nazanin, tahoma;
+}
+
+html {
+    height: 600px;
+    overflow: scroll;
 }
 
 body#options-page {
     text-align: center;
 }
 
-body#popup-page {
-    width: 600px;
+body {
+    width: 400px;
+}
+
+i.notched {
+    position: fixed;
+    left: 9px;
+    top: -6px;
+}
+
+.header-block {
+    height: 24%;
 }
 
 body {
@@ -16,13 +62,17 @@ body {
 
 #results {
     text-align: right;
+    overflow-y: scroll;
+    height: 54%;
+    border: 1px solid #bdabab;
+    background-color: #fff1f1;
 }
 
 #popup-page #results .news-item {
     display: block;
 }
 
-#list-control {
+.list-control {
     direction: ltr;
 }
 
@@ -32,4 +82,33 @@ i.loading.hide {
 
 i.loading {
     margin-top: 20px;
+}
+
+#results .news-details {
+    font-weight: bold;
+    color: #734646;
+    font-size: 12px;
+}
+
+#results h4 {
+    color: rgba(0, 2, 20, 0.56);
+}
+
+div.message #user-status.list, div.message #user-help.list {
+    direction: rtl;
+    text-align: right;
+}
+
+#popup-page div.message, #options-page div.message {
+    max-height: 60%;
+    overflow: auto;
+}
+
+#help-page div.message .item {
+    text-align: justify;
+    padding-bottom: 30px;
+}
+
+#results .item {
+    padding-top: 11px;
 }

@@ -1,57 +1,74 @@
 var username;
-var password;
+var token;
 var valid = 1;
 
 function save_options() {
     username = document.getElementById('username-form').value;
-    password = document.getElementById('password-form').value;
+    token = document.getElementById('token-form').value;
     valid = 1;
-    $.get('http://django.soor.ir/chrome_extension/news/' + username + '?format=json', function (data, status) {
-        console.debug(data)
-        if (data == 0) {
-            valid = 0;
-        }
-        console.debug(valid);
-        chrome.storage.local.set({
+    chrome.storage.local.set({
             username: username,
-            password: password,
+            token: token,
             validation: valid,
             all_data: []
         }, function () {
-            // Update status to let user know options were saved.
-            var status = document.getElementById('status');
-            if (valid == 1) {
-                status.innerHTML = '<div class="ui compact success message"><i class="close icon"></i><div class="header"> مشخصات ' +
-                    username + ' ثبت شد.' + '</div></div>';
-            }
-            else {
-                status.innerHTML = '<div class="ui compact negative message"><i class="close icon"></i> <div class="header">'
-                    + 'اطلاعات ورودی معتبر نمی باشند.' + '</div></div>';
-            }
-            $('.message .close').on('click', function () {
-                $(this)
-                    .closest('.message')
-                    .transition('fade')
-                ;
+        }
+    );
+    $.ajax({
+        type: 'GET',
+        url: 'http://khabareman.com/api/news/' + username + '?format=json',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", 'Token ' + token);
+        },
+        success: function (data, status, XMLHttpRequest) {
+            user_status_error('connectionError', 'اتصال برقرار است.');
+            chrome.storage.local.get({
+                user_status: []
+            }, function (items) {
+                document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
             });
-        });
+        },
+        error: function (data, status, errorThrown) {
+            if ('responseJSON' in data && 'detail' in data['responseJSON']) {
+                user_status_error('connectionError', t(data['responseJSON']['detail']))
+            }
+
+        }
+
     });
+
 }
 
 function restore_options() {
     document.getElementById('submit').addEventListener('click',
         save_options);
+    document.getElementById('button-return').addEventListener('click',
+        function (event) {
+            window.location.href = 'popup.html'
+        });
+
 
     // Use default value color = 'red' and likesColor = true.
     chrome.storage.local.get({
         username: '',
-        password: ''
+        token: '',
+        user_status: []
     }, function (items) {
         username = items.username;
-        password = items.password;
+        token = items.token;
         document.getElementById('username-form').value = items.username;
-        document.getElementById('password-form').value = items.password;
+        document.getElementById('token-form').value = items.token;
+        document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
     });
+
+    self.setInterval(function () {
+        chrome.storage.local.get({
+            user_status: []
+        }, function (items) {
+            document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
+        });
+    }, 1000);
+
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);

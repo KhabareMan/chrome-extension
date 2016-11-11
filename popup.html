@@ -12,30 +12,42 @@
     <link rel="stylesheet" type="text/css" href="semantic/accordion.min.css">
     <script src="semantic/accordion.min.js"></script>
     <link href="semantic/icon.min.css" rel="stylesheet">
+    <script src="general.js"></script>
     <script src="popup.js"></script>
     <link href="popup.css" rel="stylesheet">
 </head>
 <body id="popup-page">
-<h3 class="ui block header">خبر زنده‌ی من</h3>
-<div id="check-login" class="ui warning message">
-    <div class="header">
-        لطفا در قسمت تنظیمات اطلاعات کاربری خود را وارد نمایید.
-    </div>
-    جهت استفاده از این افزونه می‌بایست از طریق روبات تلگرام
-    <a href="https://telegram.me/khabaremanbot" class="link">خبرِمن</a>
-    اقدام به دریافت نام کاربری و توکن نمایید.
-</div>
-<h4 id="change-user"></h4>
 
-<div id="list-control" class="ui labeled icon buttons">
-    <button class="ui button" id="button-play">
-        <i class="icon"></i>
-        دریافت خبر
-    </button>
-    <button class="ui button" id="button-notif">
-        <i class="icon alarm"></i>
-        آگاه‌سازی
-    </button>
+<h3 class="ui block header">خبر زنده‌ی من
+</h3>
+<i class="notched circle icon loading"></i>
+
+<div class="header-block">
+
+    <div class="list-control ui labeled icon buttons">
+        <button class="ui button" id="button-play">
+            <i class="icon"></i>
+            دریافت خبر
+
+        </button>
+        <button class="ui button" id="button-notif">
+            <i class="icon alarm"></i>
+            آگاه‌سازی
+        </button>
+    </div>
+
+
+    <div class="ui warning message">
+        <ul class="list" id="user-status">
+
+        </ul>
+    </div>
+</div>
+
+<div id="results" class="ui list">
+
+</div>
+<div class="list-control ui labeled icon buttons">
     <button class="ui button" id="button-history">
         <i class="remove icon"></i>
         حذف تاریخچه
@@ -44,12 +56,11 @@
         <i class="setting icon"></i>
         تنظیمات
     </button>
+    <button class="ui button" id="button-help">
+        <i class="help circle icon"></i>
+        راهنما
+    </button>
 </div>
-<div>
-    <i class="notched circle icon loading"></i>
-</div>
-<div id="results" class="ui list"></div>
-
 </body>
 </html>
 
