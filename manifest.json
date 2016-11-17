@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Khabare Man Notification",
   "short_name": "KhabareMan",
-  "description": "Khabare Man Notification! (Beta)",
+  "description": "با استفاده از این افزونه می‌توانید اخبار مرتبط با نشان‌های خود در روبات تلگرام خبرِمن را از طریق مرورگر دریافت نمایید.",
   "version": "0.0.0.2",
   "options_page": "options.html",
   "browser_action": {

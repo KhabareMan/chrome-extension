@@ -94,14 +94,7 @@ function connect() {
     if (status == 0) {
         return false
     }
-
-    var res = $.ajax({
-        type: 'GET',
-        url: 'http://khabareman.com/api/news/' + username + '?format=json',
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", 'Token ' + token);
-        },
-        success: function (data, status, XMLHttpRequest) {
+    server_data(username, token, function (data, status, XMLHttpRequest) {
             var i, j, tekrar;
 
             for (i = 0; i < data.length; i++) {
@@ -117,20 +110,14 @@ function connect() {
                 }
             }
             chrome_notification_bulk(new_data);
-            user_status_error('connectionError', 'اتصال برقرار است.');
             new_data = [];
             chrome.browserAction.setBadgeText({text: all_data.length + "+"});
             chrome.storage.local.set({
                 all_data: all_data
             }, function () {
             });
-        },
-        error: function (data, status, errorThrown) {
-            if ('responseJSON' in data && 'detail' in data['responseJSON']) {
-                user_status_error('connectionError', t(data['responseJSON']['detail']))
-            }
         }
-    });
+    )
 }
 
 

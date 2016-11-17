@@ -33,27 +33,17 @@ function user_status_error(type, data) {
 function t(input) {
     if (input == 'Invalid token.') {
         input = 'ارتباط برقرار نمی‌باشد.';
-        input += 'جهت استفاده از این افزونه می‌بایست از طریق ';
-        input += '<a href="https://telegram.me/khabaremanbot" class="link">روبات تلگرام خبرِمن</a>';
-        input += ' با وارد کردن دستور ';
-        input += '<a style="direction:ltr;"> chrome/ </a>';
-        input += ' اقدام به دریافت نام کاربری و توکن نمایید.'
+        input += 'به ';
+        input += '<a href="help.html">راهنما</a>';
+        input += ' مراجعه فرمایید.'
     }
     return input
-}
-
-function wait(ms) {
-    var start = new Date().getTime();
-    var end = start;
-    while (end < start + ms) {
-        end = new Date().getTime();
-    }
 }
 
 function html_user_status(user_status) {
     var info_all = '';
     for (var i = 0; i < user_status.length; i++) {
-        info_all += '<div class="item">' + user_status[i]['data'] + '</div>'
+        info_all += '<div class="item"><i class="left triangle icon"></i>' + user_status[i]['data'] + '</div>'
     }
 
 
@@ -66,3 +56,23 @@ $(document).ready(function () {
         return false;
     });
 });
+
+
+function server_data(username, token, success_function) {
+    $.ajax({
+        type: 'GET',
+        url: 'http://khabareman.com/api/news/' + username + '?format=json',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", 'Token ' + token);
+        },
+        success: function (data, status, XMLHttpRequest) {
+            user_status_error('connectionError', 'اتصال برقرار است.');
+            success_function(data, status, XMLHttpRequest)
+        },
+        error: function (data, status, errorThrown) {
+            if ('responseJSON' in data && 'detail' in data['responseJSON']) {
+                user_status_error('connectionError', t(data['responseJSON']['detail']))
+            }
+        }
+    });
+}

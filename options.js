@@ -14,28 +14,13 @@ function save_options() {
         }, function () {
         }
     );
-    $.ajax({
-        type: 'GET',
-        url: 'http://khabareman.com/api/news/' + username + '?format=json',
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", 'Token ' + token);
-        },
-        success: function (data, status, XMLHttpRequest) {
-            user_status_error('connectionError', 'اتصال برقرار است.');
-            chrome.storage.local.get({
-                user_status: []
-            }, function (items) {
-                document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
-            });
-        },
-        error: function (data, status, errorThrown) {
-            if ('responseJSON' in data && 'detail' in data['responseJSON']) {
-                user_status_error('connectionError', t(data['responseJSON']['detail']))
-            }
-
-        }
-
-    });
+    server_data(username, token, function (data, status, XMLHttpRequest) {
+        chrome.storage.local.get({
+            user_status: []
+        }, function (items) {
+            document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
+        });
+    })
 
 }
 

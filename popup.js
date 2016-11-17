@@ -78,7 +78,7 @@ function check_login() {
                 }
                 var prior = document.getElementById('results').innerHTML;
 
-                document.getElementById('results').innerHTML = results + prior;
+                document.getElementById('results').innerHTML =results + prior;
                 $('.ui.accordion').accordion();
                 chrome.storage.local.set({
                     hist_mark: marks,
@@ -103,13 +103,19 @@ function periodic_check_login() {
         check_login()
     }, 10000);
 
+    chrome.storage.local.get({
+        user_status: []
+    }, function (items) {
+        document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
+    });
+
     self.setInterval(function () {
         chrome.storage.local.get({
             user_status: []
         }, function (items) {
             document.getElementById('user-status').innerHTML = html_user_status(items.user_status)
         });
-    }, 5000);
+    }, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', periodic_check_login);

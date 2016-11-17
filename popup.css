@@ -21,8 +21,8 @@ body {
 
 }
 
-body#options-page h3.header, body#popup-page h3.header, #results h4, body .header-block {
-    font-family: Yekan, tahoma;
+.list-control button.ui, body#options-page h3.header, body#popup-page h3.header, #results h4, body .header-block {
+    font-family: Yekan, tahoma, Arial;
 }
 
 body {
@@ -30,7 +30,7 @@ body {
 }
 
 body #results {
-    font-family: Nazanin, tahoma;
+    font-family: Nazanin, tahoma, Arial;
 }
 
 html {
@@ -58,6 +58,11 @@ i.notched {
 
 body {
     text-align: center;
+
+}
+
+body .header{
+    text-align: right;
 }
 
 #results {
@@ -65,7 +70,7 @@ body {
     overflow-y: scroll;
     height: 54%;
     border: 1px solid #bdabab;
-    background-color: #fff1f1;
+    background-color: #f8f8f9;
 }
 
 #popup-page #results .news-item {
@@ -102,6 +107,8 @@ div.message #user-status.list, div.message #user-help.list {
 #popup-page div.message, #options-page div.message {
     max-height: 60%;
     overflow: auto;
+    width: 97%;
+    margin: 10px auto;
 }
 
 #help-page div.message .item {
@@ -111,4 +118,9 @@ div.message #user-status.list, div.message #user-help.list {
 
 #results .item {
     padding-top: 11px;
+}
+
+code{
+    direction: ltr;
+    display: inline-block;
 }
